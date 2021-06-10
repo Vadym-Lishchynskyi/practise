@@ -13,4 +13,4 @@ def sum_of_a_range(n: int, a: int) -> float:
 if __name__ == '__main__':
     a = 4
     n = int(input("Enter n: "))
-    print(sum_of_a_range(a, n))
+    print(sum_of_a_range(n, a))

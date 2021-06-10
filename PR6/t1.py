@@ -1,7 +1,7 @@
 def middle_arifm(a, start, stop):
     n = stop - start + 1
     res = sum(a[start:stop+1])/n
-    return round(res,2)
+    return round(res, 2)
 
 
 if __name__ == '__main__':
