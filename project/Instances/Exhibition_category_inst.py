@@ -1,3 +1,4 @@
+import uuid
 from abc import ABC
 
 
@@ -24,6 +25,7 @@ class Category:
             self.__description = description
         else:
             self.__description = 'Unknown'
+        # self.__uuid = uuid.uuid4()
 
     @property
     def name(self):
@@ -32,6 +34,10 @@ class Category:
     @property
     def description(self):
         return self.__description
+
+    @property
+    def id(self):
+        return self.__uuid
 
     @name.setter
     def name(self, new_name):
@@ -55,7 +61,17 @@ class Category:
     def description(self):
         return self.__description
 
-    def __repr__(self):
-        return f"Instance: Category\n" + \
-               f"Name: {self.name}"
-               # f"Category: {self.category}"
+    @id.getter
+    def id(self):
+        return self.__uuid
+
+    # def __repr__(self):
+    #     return f"Instance: Category\n" + \
+    #            f"Name: {self.name}"
+    #            # f"Category: {self.category}"
+
+
+
+
+    def __str__(self):
+        return f'{self.name}'

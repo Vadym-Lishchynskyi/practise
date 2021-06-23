@@ -1,22 +1,23 @@
+import json
 from abc import ABC
 from datetime import datetime
 
 from project.DataIO import ListExhibitions
+import uuid
+
+class ExhibitionBase(ABC):
+    """
+    Abstract class of Exhibition instance
+    """
+
+    def __init__(self):
+        self.__name = 'Unknown'
+        self.__description = None
+        self.__start_date = datetime.now()
+        self.__category = []
 
 
-# class ExhibitionBase(ABC):
-#     """
-#     Abstract class of Exhibition instance
-#     """
-#
-#     def __init__(self):
-#         self.__name = 'Unknown'
-#         self.__description = None
-#         self.__start_date = datetime.now()
-#         self.__category = []
-
-
-class Exhibition:
+class Exhibition(ExhibitionBase):
     """
     Class of Exhibition instance
     """
@@ -29,6 +30,7 @@ class Exhibition:
             self.__category = []
         else:
             self.__category = [category]
+        # self.__uuid = uuid.uuid4()
 
     # ~~~~~~~~~~~~~~~~~~~~~~ Attribute installation ~~~~~~~~~~~~~~~~~~~~~~
     @property
@@ -42,6 +44,10 @@ class Exhibition:
     @property
     def category(self):
         return self.__category
+
+    @property
+    def start_date(self):
+        return self.__start_date
 
     @name.setter
     def name(self, new_name):
@@ -71,16 +77,25 @@ class Exhibition:
             self.__name = new_description
 
     @description.getter
-    def name(self):
+    def description(self):
         return self.__description
 
+    @start_date.getter
+    def start_date(self):
+        return self.__start_date
+
     # ~~~~~~~~~~~~~~~~~~~~~~ Other ~~~~~~~~~~~~~~~~~~~~~~
+    def json_default(self):
+        if isinstance(self.start_date, datetime):
+            return dict(year=self.start_date.year, month=self.start_date.month, day=self.start_date.day)
+        else:
+            return self.__dict__
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: self.json_default(),
+                          sort_keys=True, indent=4)
 
     def __repr__(self):
         return f"Instance: Exhibition\n" + \
                f"Name: {self.name}\n" + \
                f"Category: {self.category[0].name}"
-
-
-
-
