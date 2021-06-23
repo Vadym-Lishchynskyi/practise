@@ -24,10 +24,10 @@ while True:
     for i in range(len(all_exhibitions)):
         table_exhibitions.add_row([i+1, all_exhibitions[i].name, all_exhibitions[i].category[0], all_exhibitions[i].start_date, all_exhibitions[i].description])
 
-    if all_exhibitions:
+    if all_categories:
         print(table_categories)
 
-    if all_categories:
+    if all_exhibitions:
         print(table_exhibitions)
 
     list_commands(commands)
@@ -42,10 +42,10 @@ while True:
         create_testing_data()
     if command == 2:
         delete_all()
-    # if command == 3:
-    #     write_to_file()
+    if command == 3:
+        write_to_file()
     # if command == 4:
     #      add_category()
-    if command == 5:
-        write_to_file()
+    # if command == 5:
+    #     write_to_file()
 

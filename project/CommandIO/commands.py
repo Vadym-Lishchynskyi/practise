@@ -1,7 +1,11 @@
+import os.path
+import sys
+
 from project.DataIO import ListExhibitions
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
 from project.Instances.Exhibition_category_inst import Category
 from project.Instances.Exhibition_inst import Exhibition
+from project.DataIO.SaveToFile import write_all_to_txt, get_data_from_txt
 
 from xml_marshaller import xml_marshaller
 import json
@@ -20,7 +24,16 @@ testing_data_objects = []
 
 
 def create_testing_data():
-    if not all_categories:
+    # path_to_test_data = 'Data/test_data.txt'
+    print(sys.argv[0])
+    path_to_test_data = os.path.join(os.getcwd(), 'project', 'Data', 'test_data.txt')
+    print(path_to_test_data)
+    # print(os.listdir(path_to_test_data))
+
+    try:
+        get_data_from_txt(path_to_test_data)
+    except IOError as e:
+        print(u'не удалось открыть файл')
         new_cat = Category("Виставка картин", "Примутні переважно ватвори мистецтва")
         ListExhibitions.new_category(new_cat)
         new_cat = Category("Технічна виставка", "Виставка приладів та прогрма")
@@ -33,6 +46,10 @@ def create_testing_data():
         ListExhibitions.new_exhibition(new_exhib)
         new_exhib = Exhibition("Teh mobile", "Автомобільний концерн Ford", all_categories[2])
         ListExhibitions.new_exhibition(new_exhib)
+    # else:
+    #     with file:
+    #         print(u'делаем что-то с файлом')
+    #         get_data_from_txt(path_to_test_data)
 
 
 def delete_testing_data():
@@ -65,9 +82,12 @@ def write_to_file():
     # # print(strXmlPerson)
     # with open('file.xml', "w") as f:
     #     f.write(strXmlPerson)
-    for i in all_exhibitions:
-        print(i.toJSON())
+    # for i in all_exhibitions:
+    #     print(i.toJSON())
+    write_all_to_txt()
 
 
 def get_from_file():
     pass
+
+
