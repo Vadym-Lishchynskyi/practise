@@ -1,9 +1,11 @@
 from project.CommandIO.commands import commands, create_testing_data, write_to_file, \
-    delete_all, add_exhibition
+    delete_all, add_exhibition, create_new_category, create_new_exhibition
 from project.ConsoleIO.display_commands import list_commands
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
 
 from prettytable import PrettyTable
+
+from project.DataIO.SaveToFile import write_new_exhib_to_txt
 
 
 def create_table():
@@ -46,6 +48,8 @@ while True:
         write_to_file()
     # if command == 4:
     #      add_category()
-    # if command == 5:
-    #     write_to_file()
+    if command == 5:
+        create_new_exhibition()
+    if command == 6:
+        create_new_category()
 

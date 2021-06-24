@@ -1,11 +1,14 @@
 import os.path
 import sys
+from datetime import datetime
+
+from project.config import dateFormatter
 
 from project.DataIO import ListExhibitions
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
 from project.Instances.Exhibition_category_inst import Category
 from project.Instances.Exhibition_inst import Exhibition
-from project.DataIO.SaveToFile import write_all_to_txt, get_data_from_txt
+from project.DataIO.SaveToFile import write_all_to_txt, get_data_from_txt, write_new_cat_to_txt
 
 from xml_marshaller import xml_marshaller
 import json
@@ -32,7 +35,7 @@ def create_testing_data():
 
     try:
         get_data_from_txt(path_to_test_data)
-    except IOError as e:
+    except (IOError, FileNotFoundError) as e:
         print(u'не удалось открыть файл')
         new_cat = Category("Виставка картин", "Примутні переважно ватвори мистецтва")
         ListExhibitions.new_category(new_cat)
@@ -89,5 +92,53 @@ def write_to_file():
 
 def get_from_file():
     pass
+
+
+def create_new_category():
+    name = input('Enter name: ')
+    description = input('Enter description: ')
+
+    new_cat = Category(name, description)
+    ListExhibitions.new_category(new_cat)
+
+    write_new_cat_to_txt(new_cat)
+
+
+def create_new_exhibition():
+    name = input('Enter name: ')
+    for num, i in enumerate(all_categories, 1):
+        print(f'\t{num} - {i.name}')
+
+    if not all_categories:
+        print('Enter category first')
+        return
+
+    category_num = int(input('Choose category (number): '))
+    if category_num > len(all_categories):
+        print('No such category')
+
+    # category = all_categories[category_num - 1]
+
+    start_date = input('Enter start_date (2021-06-24-08:13 or Enter): ')
+    f = 1
+    while f:
+        try:
+            if start_date == '':
+                start_date = None
+                break
+            datetime.strptime(start_date, dateFormatter)
+            f = 0
+        except Exception as e:
+            f = 1
+            print(e, end='\n')
+            print('Something went wrong. Try again')
+
+
+    description = input('Enter description: ')
+
+    new_exhib = Exhibition(name, description, all_categories[category_num])
+    ListExhibitions.new_exhibition(new_exhib)
+
+    write_new_cat_to_txt(new_exhib)
 
 

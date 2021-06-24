@@ -5,6 +5,8 @@ from datetime import datetime
 from project.DataIO import ListExhibitions
 import uuid
 
+from project.config import dateFormatter
+
 
 class ExhibitionBase(ABC):
     """
@@ -23,7 +25,7 @@ class Exhibition(ExhibitionBase):
     Class of Exhibition instance
     """
 
-    def __init__(self, name, description, category, start_date):
+    def __init__(self, name, description, category, start_date=datetime.now().strftime(dateFormatter)):
         self.__name = name
         self.__description = description
         if not start_date:
