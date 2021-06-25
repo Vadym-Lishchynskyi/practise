@@ -2,7 +2,7 @@ import os.path
 import sys
 from datetime import datetime
 
-from project.config import dateFormatter
+from project.config import dateFormatter, path_to_test_data
 
 from project.DataIO import ListExhibitions
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
@@ -23,17 +23,46 @@ commands = {'Вийти': 0,
             'Редагувати записи': 7
             }
 
+commands_exhibition = {
+    'Повернутись в головне меню': 0,
+    'Видалити виставку': 1,
+    'Видалити усі виставки': 2,
+    'Сортувати за назвою': 3,
+    'Сортувати за датою': 4,
+    'Сортувати за категоріями': 5,
+    'Фільтрувати за назвою': 6,
+    'Фільтрувати за категорією': 7,
+    'Фільтрувати за датою': 8,
+}
+
+commands_categories = {
+    'Повернутись в головне меню': 0,
+    'Видалити категорію': 1,
+    'Видалити усі категорії': 2,
+    'Сортувати за назвою': 3,
+    'Фільтрувати за назвою': 4,
+}
+
+commands_txt = {
+
+}
+
+commands_xml = {
+
+}
+
 testing_data_objects = []
 
 
 def create_testing_data():
     # path_to_test_data = 'Data/test_data.txt'
-    print(sys.argv[0])
-    path_to_test_data = os.path.join(os.getcwd(), 'project', 'Data', 'test_data.txt')
-    print(path_to_test_data)
+    # print(sys.argv[0])
+    # path_to_test_data = os.path.join(os.getcwd(), 'project', 'Data', 'test_data.txt')
+    # print(path_to_test_data)
     # print(os.listdir(path_to_test_data))
 
     try:
+        print(path_to_test_data)
         get_data_from_txt(path_to_test_data)
     except (IOError, FileNotFoundError) as e:
         print(u'не удалось открыть файл')
@@ -136,7 +165,7 @@ def create_new_exhibition():
 
     description = input('Enter description: ')
 
-    new_exhib = Exhibition(name, description, all_categories[category_num])
+    new_exhib = Exhibition(name, description, all_categories[category_num-1])
     ListExhibitions.new_exhibition(new_exhib)
 
     write_new_cat_to_txt(new_exhib)
