@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 import platform
 
 dateFormatter = '%Y-%m-%d-%H:%M'
+error_message_for_commands = 'Command should be integer num from diapason above!\n'
 
 
 def get_path_from_xml_config():

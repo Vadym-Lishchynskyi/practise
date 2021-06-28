@@ -73,6 +73,11 @@ def write_new_exhib_to_txt(obj):
                         '\tDescription: ' + obj.description + '\n')
 
 
+# def edit_category(obj):
+
+
+
+
 def get_from_txt():
     pass
 

@@ -11,16 +11,24 @@ def enter_string(string, max_len=250):
     return desc
 
 
-def enter_number(string, typ=int, var=None):
-    num = input(string + ': ')
-    if var:
-        while int(num) not in range(1, var+1):
-            print('No such category')
-            num = input(string + ': ')
-        return int(num)
-    else:
-        num = float(num)
-    return num
+def enter_number(string, typ=int, var=None, err='Wrong number\n'):
+
+    res = 1
+    while res:
+        try:
+            num = int(input(string + ': '))
+        except ValueError:
+            print(err)
+            continue
+
+        if var:
+            while int(num) not in range(0, var):
+                print(err)
+                num = input(string + ': ')
+            return int(num)
+        else:
+            num = float(num)
+        return num
 
 
 def enter_date(string):

@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 
 from project.Common.Entering import enter_string, enter_number, enter_date
+from project.ConsoleIO.display_commands import letter_for_agreement
 from project.config import dateFormatter, path_to_test_data
 
 from project.DataIO import ListExhibitions
@@ -21,22 +22,15 @@ commands_main = {
     'Робота з файлми': 3,
     'Редагувати записи категорій': 4,
     'Редагувати записи виставок': 5,
-    '~~~': 122,
-    'Додати запис про виставку': 123,
-    'Додати запис про категорію': 124,
 }
 
-commands_exhibition = {
-    'Повернутись в головне меню': 0,
-    'Додати запис про виставку': 1,
-    'Видалити виставку': 2,
-    'Видалити усі виставки': 3,
-    'Сортувати за назвою': 4,
-    'Сортувати за датою': 5,
-    'Сортувати за категоріями': 6,
-    'Фільтрувати за назвою': 7,
-    'Фільтрувати за категорією': 8,
-    'Фільтрувати за датою': 9,
+commands_files = {
+    'Вийти': 0,
+    'Створити тестові дані': 1,
+    'Видалити всі дані': 2,
+    'Робота з файлми': 3,
+    'Редагувати записи категорій': 4,
+    'Редагувати записи виставок': 5,
 }
 
 commands_categories = {
@@ -44,8 +38,23 @@ commands_categories = {
     'Додати запис про категорію': 1,
     'Видалити категорію': 2,
     'Видалити усі категорії': 3,
-    'Сортувати за назвою': 4,
-    'Фільтрувати за назвою': 5,
+    'Редагувати записи категорій': 4,
+    'Сортувати за назвою': 5,
+    'Фільтрувати за назвою': 6,
+}
+
+commands_exhibition = {
+    'Повернутись в головне меню': 0,
+    'Додати запис про виставку': 1,
+    'Видалити виставку': 2,
+    'Видалити усі виставки': 3,
+    'Редагувати записи виставок': 4,
+    'Сортувати за назвою': 5,
+    'Сортувати за датою': 6,
+    'Сортувати за категоріями': 7,
+    'Фільтрувати за назвою': 8,
+    'Фільтрувати за категорією': 9,
+    'Фільтрувати за датою': 10,
 }
 
 commands_txt = {
@@ -55,7 +64,6 @@ commands_txt = {
 commands_xml = {
 
 }
-
 
 testing_data_objects = []
 
@@ -99,9 +107,12 @@ def delete_testing_data():
                 del all_exhibitions[all_exhibitions.index(i)]
 
 
+@letter_for_agreement(message=None)
 def delete_all():
     all_exhibitions.clear()
     all_categories.clear()
+
+    return None
 
 
 def add_exhibition():
@@ -111,7 +122,7 @@ def add_exhibition():
         name = input("Enter exhibition name: ")
         description = input("Enter description: ")
         for i in range(len(all_categories)):
-            print(f'{i+1}- {all_categories[i]}')
+            print(f'{i}- {all_categories[i]}')
         category_name = input("Choose category(enter 1 to n): ")
 
 
@@ -158,9 +169,25 @@ def create_new_exhibition():
 
     description = enter_string('Enter description')
 
-    new_exhib = Exhibition(name, description, all_categories[category_num-1], start_date)
+    new_exhib = Exhibition(name, description, all_categories[category_num - 1], start_date)
     ListExhibitions.new_exhibition(new_exhib)
 
     write_new_cat_to_txt(new_exhib)
 
 
+@letter_for_agreement(message='Exhibitions with such category will be deleted')
+def delete_category(obj):
+    i = 0
+    while i < len(all_exhibitions):
+        print(all_exhibitions[i].category[0])
+        if all_exhibitions[i].category[0] == all_categories[obj]:
+            del all_exhibitions[i]
+            i -= 1
+        i += 1
+
+    del all_categories[obj]
+
+
+@letter_for_agreement(message=None)
+def delete_element(obj, table):
+    del table[obj]
