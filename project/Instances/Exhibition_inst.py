@@ -80,7 +80,7 @@ class Exhibition(ExhibitionBase):
         if len(new_description) > 500:
             print('Name is too long')
         else:
-            self.__name = new_description
+            self.__description = new_description
 
     @description.getter
     def description(self):
@@ -89,6 +89,10 @@ class Exhibition(ExhibitionBase):
     @start_date.getter
     def start_date(self):
         return self.__start_date
+
+    @start_date.setter
+    def start_date(self, new_start_date):
+        self.__start_date = new_start_date
 
     # ~~~~~~~~~~~~~~~~~~~~~~ Other ~~~~~~~~~~~~~~~~~~~~~~
     def json_default(self):

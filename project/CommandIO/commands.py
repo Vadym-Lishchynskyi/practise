@@ -107,7 +107,7 @@ def delete_testing_data():
                 del all_exhibitions[all_exhibitions.index(i)]
 
 
-@letter_for_agreement(message=None)
+@letter_for_agreement(message="This command will delete all data")
 def delete_all():
     all_exhibitions.clear()
     all_categories.clear()
@@ -191,3 +191,40 @@ def delete_category(obj):
 @letter_for_agreement(message=None)
 def delete_element(obj, table):
     del table[obj]
+
+
+@letter_for_agreement(message="All exhibitions will be removed")
+def delete_exhibitions():
+    all_exhibitions.clear()
+
+
+def edit_category(obj):
+    name = enter_string('Enter name', 30)
+    description = enter_string('Enter description')
+
+    all_categories[obj].name = name
+    all_categories[obj].description = description
+
+
+def edit_exhibition(obj):
+    name = enter_string('Enter name', 30)
+    for num, i in enumerate(all_categories, 1):
+        print(f'\t{num} - {i.name}')
+    all_exhibitions[obj].name = name
+
+    if not all_categories:
+        print('Enter category first')
+
+    category_num = enter_number('Choose category (number)', var=len(all_categories))
+    all_exhibitions[obj].category[0] = all_categories[category_num-1]
+
+    start_date = enter_date('Enter start_date (2021-06-24-08:13 or Enter)')
+    all_exhibitions[obj].start_date = start_date
+
+    description = enter_string('Enter description')
+    all_exhibitions[obj].description = description
+
+
+
+
+

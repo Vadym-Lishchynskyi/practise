@@ -4,11 +4,11 @@ from project.config import dateFormatter
 
 
 def enter_string(string, max_len=250):
-    desc = input(string + ': ')
-    while len(desc) > max_len:
+    var = input(string + ': ')
+    while len(var) > max_len:
         print('Wrong description! (max length 250)')
-        desc = input(string + ': ')
-    return desc
+        var = input(string + ': ')
+    return var
 
 
 def enter_number(string, typ=int, var=None, err='Wrong number\n'):
@@ -37,7 +37,7 @@ def enter_date(string):
         start_date = input(string + ': ')
         try:
             if start_date == '':
-                start_date = None
+                start_date = datetime.now().strftime(dateFormatter)
                 break
             datetime.strptime(start_date, dateFormatter)
             f = 0

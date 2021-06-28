@@ -2,7 +2,7 @@ import os
 
 from project.CommandIO.commands import commands_main, create_testing_data, write_to_file, \
     delete_all, add_exhibition, create_new_category, create_new_exhibition, commands_exhibition, commands_files, \
-    commands_categories, delete_element, delete_category
+    commands_categories, delete_element, delete_category, edit_category, edit_exhibition, delete_exhibitions
 from project.Common.Entering import enter_number
 from project.ConsoleIO.display_commands import list_commands, letter_for_agreement
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
@@ -102,6 +102,16 @@ while True:
             cat_num = enter_number('Enter category number', var=len(all_categories))
             delete_category(cat_num)
 
+        if s_command == 3:
+            delete_all()
+
+        if s_command == 4:
+            cat_num = enter_number('Enter category number', var=len(all_categories))
+            edit_category(cat_num)
+
+        if s_command == 5:
+            delete_all()
+
     if command == 5:
         os.system('CLS||clear')
 
@@ -120,10 +130,12 @@ while True:
             cat_num = enter_number('Enter exhibition number', var=len(all_exhibitions))
             delete_element(cat_num, all_exhibitions)
 
+        if s_command == 3:
+            delete_exhibitions()
 
-
-
-
+        if s_command == 4:
+            ex_num = enter_number('Enter exhibition number', var=len(all_exhibitions))
+            edit_exhibition(ex_num)
 
 
     # if command == 3:
