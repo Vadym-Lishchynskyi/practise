@@ -3,7 +3,9 @@ import os
 from project.CommandIO.commands import commands_main, create_testing_data, write_to_file, \
     delete_all, add_exhibition, create_new_category, create_new_exhibition, commands_exhibition, commands_files, \
     commands_categories, delete_element, delete_category, edit_category, edit_exhibition, delete_exhibitions
-from project.Common.Entering import enter_number
+from project.CommandIO.filtering import filtering
+from project.CommandIO.sortings import sort_by_name, sort_by_category, sort_by_date
+from project.Common.Entering import enter_number, enter_string
 from project.ConsoleIO.display_commands import list_commands, letter_for_agreement
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
 
@@ -38,6 +40,21 @@ def create_table(to_show='all'):
         print(table_exhibitions)
 
     print()
+
+
+def create_additional_table(elements, tip):
+    table = PrettyTable()
+
+    if tip == 'category':
+        for i in range(len(elements)):
+            table.field_names = ["№", "Name", "Description"]
+            table.add_row([i, all_categories[i].name, all_categories[i].description])
+    else:
+        for i in range(len(elements)):
+            table.field_names = ["№", "Name", "Category", "Start date", "Description"]
+            table.add_row([i, all_exhibitions[i].name, all_exhibitions[i].category[0], all_exhibitions[i].start_date, all_exhibitions[i].description])
+
+    return table
 
 
 while True:
@@ -110,7 +127,17 @@ while True:
             edit_category(cat_num)
 
         if s_command == 5:
-            delete_all()
+            sort_by_name(all_categories)
+
+        if s_command == 6:
+            to_find = enter_string('Enter phrase to search for')
+            res = filtering(to_find, all_categories, 'name')
+            if res:
+                print(create_additional_table(res, tip='category'))
+            else:
+                print('Not found')
+
+            input('Press any button...')
 
     if command == 5:
         os.system('CLS||clear')
@@ -137,6 +164,44 @@ while True:
             ex_num = enter_number('Enter exhibition number', var=len(all_exhibitions))
             edit_exhibition(ex_num)
 
+        if s_command == 5:
+            sort_by_name(all_exhibitions)
+
+        if s_command == 6:
+            sort_by_name(all_exhibitions)
+
+        if s_command == 7:
+            sort_by_date(all_exhibitions)
+
+        if s_command == 8:
+            to_find = enter_string('Enter phrase to search for')
+            res = filtering(to_find, all_categories, 'name')
+            if res:
+                print(create_additional_table(res, tip='exhibition'))
+            else:
+                print('Not found')
+
+            input('Press any button...')
+
+        if s_command == 9:
+            to_find = enter_string('Enter phrase to search for')
+            res = filtering(to_find, all_categories, 'category')
+            if res:
+                print(create_additional_table(res, tip='exhibition'))
+            else:
+                print('Not found')
+
+            input('Press any button...')
+
+        if s_command == 10:
+            to_find = enter_string('Enter phrase to search for')
+            res = filtering(to_find, all_categories, 'start_date')
+            if res:
+                print(create_additional_table(res, tip='exhibition'))
+            else:
+                print('Not found')
+
+            input('Press any button...')
 
     # if command == 3:
     #     write_to_file()

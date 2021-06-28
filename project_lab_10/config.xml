@@ -1,0 +1,8 @@
+<configuration>
+  <appSettings>
+    <file_path_win>Data</file_path_win>
+    <file_path_cat_win>Data\data_categories.txt</file_path_cat_win>
+    <file_path_ex_win>Data\data_exhibitions.txt</file_path_ex_win>
+    <filepathlin>1181251680</filepathlin>
+  </appSettings>
+</configuration>

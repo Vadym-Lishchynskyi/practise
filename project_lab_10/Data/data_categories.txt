@@ -1,0 +1,8 @@
+¹: 0
+	Name: Some new exhibition category
+	Description: taram param pam
+
+¹: 1
+	Name: some exhibition category
+	Description: dfsgsddgfwsdfsdgsefse;foinesfbiab
+
