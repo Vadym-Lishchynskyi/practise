@@ -2,6 +2,7 @@ import os.path
 import sys
 from datetime import datetime
 
+from project.Common.Entering import enter_string, enter_number, enter_date
 from project.config import dateFormatter, path_to_test_data
 
 from project.DataIO import ListExhibitions
@@ -13,34 +14,38 @@ from project.DataIO.SaveToFile import write_all_to_txt, get_data_from_txt, write
 from xml_marshaller import xml_marshaller
 import json
 
-commands = {'Вийти': 0,
-            'Створити тестові дані': 1,
-            'Видалити всі дані': 2,
-            'Зберигти дані': 3,
-            'Завантажити дані': 4,
-            'Додати запис про виставку': 5,
-            'Додати запис про категорію': 6,
-            'Редагувати записи': 7
-            }
+commands_main = {
+    'Вийти': 0,
+    'Створити тестові дані': 1,
+    'Видалити всі дані': 2,
+    'Робота з файлми': 3,
+    'Редагувати записи категорій': 4,
+    'Редагувати записи виставок': 5,
+    '~~~': 122,
+    'Додати запис про виставку': 123,
+    'Додати запис про категорію': 124,
+}
 
 commands_exhibition = {
     'Повернутись в головне меню': 0,
-    'Видалити виставку': 1,
-    'Видалити усі виставки': 2,
-    'Сортувати за назвою': 3,
-    'Сортувати за датою': 4,
-    'Сортувати за категоріями': 5,
-    'Фільтрувати за назвою': 6,
-    'Фільтрувати за категорією': 7,
-    'Фільтрувати за датою': 8,
+    'Додати запис про виставку': 1,
+    'Видалити виставку': 2,
+    'Видалити усі виставки': 3,
+    'Сортувати за назвою': 4,
+    'Сортувати за датою': 5,
+    'Сортувати за категоріями': 6,
+    'Фільтрувати за назвою': 7,
+    'Фільтрувати за категорією': 8,
+    'Фільтрувати за датою': 9,
 }
 
 commands_categories = {
     'Повернутись в головне меню': 0,
-    'Видалити категорію': 1,
-    'Видалити усі категорії': 2,
-    'Сортувати за назвою': 3,
-    'Фільтрувати за назвою': 4,
+    'Додати запис про категорію': 1,
+    'Видалити категорію': 2,
+    'Видалити усі категорії': 3,
+    'Сортувати за назвою': 4,
+    'Фільтрувати за назвою': 5,
 }
 
 commands_txt = {
@@ -50,6 +55,7 @@ commands_txt = {
 commands_xml = {
 
 }
+
 
 testing_data_objects = []
 
@@ -124,8 +130,8 @@ def get_from_file():
 
 
 def create_new_category():
-    name = input('Enter name: ')
-    description = input('Enter description: ')
+    name = enter_string('Enter name', 30)
+    description = enter_string('Enter description')
 
     new_cat = Category(name, description)
     ListExhibitions.new_category(new_cat)
@@ -134,7 +140,7 @@ def create_new_category():
 
 
 def create_new_exhibition():
-    name = input('Enter name: ')
+    name = enter_string('Enter name')
     for num, i in enumerate(all_categories, 1):
         print(f'\t{num} - {i.name}')
 
@@ -142,30 +148,17 @@ def create_new_exhibition():
         print('Enter category first')
         return
 
-    category_num = int(input('Choose category (number): '))
-    if category_num > len(all_categories):
-        print('No such category')
+    category_num = enter_number('Choose category (number)', var=len(all_categories))
+    # if category_num > len(all_categories):
+    #     print('No such category')
 
     # category = all_categories[category_num - 1]
 
-    start_date = input('Enter start_date (2021-06-24-08:13 or Enter): ')
-    f = 1
-    while f:
-        try:
-            if start_date == '':
-                start_date = None
-                break
-            datetime.strptime(start_date, dateFormatter)
-            f = 0
-        except Exception as e:
-            f = 1
-            print(e, end='\n')
-            print('Something went wrong. Try again')
+    start_date = enter_date('Enter start_date (2021-06-24-08:13 or Enter)')
 
+    description = enter_string('Enter description')
 
-    description = input('Enter description: ')
-
-    new_exhib = Exhibition(name, description, all_categories[category_num-1])
+    new_exhib = Exhibition(name, description, all_categories[category_num-1], start_date)
     ListExhibitions.new_exhibition(new_exhib)
 
     write_new_cat_to_txt(new_exhib)

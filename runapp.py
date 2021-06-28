@@ -1,4 +1,6 @@
-from project.CommandIO.commands import commands, create_testing_data, write_to_file, \
+import os
+
+from project.CommandIO.commands import commands_main, create_testing_data, write_to_file, \
     delete_all, add_exhibition, create_new_category, create_new_exhibition
 from project.ConsoleIO.display_commands import list_commands
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
@@ -9,15 +11,24 @@ from project.DataIO.SaveToFile import write_new_exhib_to_txt
 
 
 def create_table():
-    table_exhibitions = PrettyTable()
-    table_categories = PrettyTable()
+    """
+    Creation of main tables with data
+    """
+
+    exhibitions = PrettyTable()
+    categories = PrettyTable()
     table_exhibitions.field_names = ["№", "Name", "Category", "Start date", "Description"]
     table_categories.field_names = ["№", "Name", "Description"]
 
-    return table_categories, table_exhibitions
+    return categories, exhibitions
 
 
 while True:
+    """
+    Main program circle
+    """
+
+    # ~~~~~~~~~~~~~~~~~ Creating tables with data ~~~~~~~~~~~~~~~~~
     table_categories, table_exhibitions = create_table()
 
     for i in range(len(all_categories)):
@@ -32,10 +43,15 @@ while True:
     if all_exhibitions:
         print(table_exhibitions)
 
-    list_commands(commands)
+    # ~~~~~~~~~~~~~~~~~ Listing main commands ~~~~~~~~~~~~~~~~~
+    list_commands(commands_main)
 
     print()
-    command = int(input())
+    command = input()
+    try:
+        command = int(command)
+    except ValueError:
+        print('Command should be integer num from diapason above!\n')
 
     # ~~~~~~~~~~~~~~~~~ Command verification ~~~~~~~~~~~~~~~~~
     if command == 0:
@@ -46,10 +62,15 @@ while True:
         delete_all()
     if command == 3:
         write_to_file()
-    # if command == 4:
-    #      add_category()
-    if command == 5:
-        create_new_exhibition()
-    if command == 6:
-        create_new_category()
 
+
+
+    # if command == 4:
+    #     add_category()
+    # if command == 5:
+    #     create_new_exhibition()
+    # if command == 6:
+    #     create_new_category()
+
+    # ~~~~~~~~~~~~~~~~~ Clearing console ~~~~~~~~~~~~~~~~~
+    os.system('CLS||clear')

@@ -29,7 +29,7 @@ class Exhibition(ExhibitionBase):
         self.__name = name
         self.__description = description
         if not start_date:
-            self.__start_date = datetime.now()
+            self.__start_date = datetime.now().strftime(dateFormatter)
         else:
             self.__start_date = start_date
         if not category:
