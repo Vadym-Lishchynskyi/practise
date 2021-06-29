@@ -40,8 +40,8 @@ def get_data_from_txt(path):
         # print(res)
 
 
-def write_all_to_txt():
-    with open('test_data.txt', 'w') as file:
+def write_all_to_txt(path):
+    with open(path, 'w') as file:
         file.writelines('Категорії виставок\n')
         for num, i in enumerate(all_categories):
             file.writelines(f'№: {num}\n')
@@ -53,7 +53,7 @@ def write_all_to_txt():
             file.writelines(f'№: {num}\n')
             file.writelines('\tName: ' + i.name + '\n' +
                             '\tCategory: ' + i.category[0].name + '\n'
-                            '\tStart date: ' + str(i.start_date.strftime(dateFormatter)) + '\n'
+                            '\tStart date: ' + i.start_date + '\n'
                             '\tDescription: ' + i.description + '\n')
 
 

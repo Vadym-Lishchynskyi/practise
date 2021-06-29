@@ -4,7 +4,7 @@ from datetime import datetime
 
 from project.Common.Entering import enter_string, enter_number, enter_date
 from project.ConsoleIO.display_commands import letter_for_agreement
-from project.config import dateFormatter, path_to_test_data
+from project.config import dateFormatter, path_to_test_data, get_path_from_xml_config
 
 from project.DataIO import ListExhibitions
 from project.DataIO.ListExhibitions import all_categories, all_exhibitions
@@ -125,13 +125,7 @@ def add_exhibition():
 
 
 def write_to_file():
-    # strXmlPerson = xml_marshaller.loads(all_categories)
-    # # print(strXmlPerson)
-    # with open('file.xml', "w") as f:
-    #     f.write(strXmlPerson)
-    # for i in all_exhibitions:
-    #     print(i.toJSON())
-    write_all_to_txt()
+    write_all_to_txt(os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "all_data.txt"))
 
 
 def get_from_file():

@@ -102,7 +102,7 @@ while True:
                          os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "exhibitions_data.xml"))
 
         if s_command == 3:
-            create_testing_data()
+            write_to_file()
 
         if s_command == 4:
             createXML_category(os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "categories_data.xml"))
