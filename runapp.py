@@ -12,8 +12,8 @@ from project.DataIO.ListExhibitions import all_categories, all_exhibitions
 from prettytable import PrettyTable
 
 from project.DataIO.SaveToFile import write_new_exhib_to_txt
-from project.config import error_message_for_commands
-from project_lab_10.DataIO.SafeToXML import createXML_category, createXML_exhibitions, get_from_xml
+from project.config import error_message_for_commands, get_path_from_xml_config
+from project.DataIO.SafeToXML import createXML_category, createXML_exhibitions, get_from_xml
 
 
 def create_table(to_show='all'):
@@ -98,14 +98,15 @@ while True:
             create_testing_data()
 
         if s_command == 2:
-            get_from_xml("categories_data.xml", "exhibitions_data.xml")
+            get_from_xml(os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "categories_data.xml"),
+                         os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "exhibitions_data.xml"))
 
         if s_command == 3:
             create_testing_data()
 
         if s_command == 4:
-            createXML_category("categories_data.xml")
-            createXML_exhibitions("exhibitions_data.xml")
+            createXML_category(os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "categories_data.xml"))
+            createXML_exhibitions(os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), "exhibitions_data.xml"))
 
 
     if command == 4:
