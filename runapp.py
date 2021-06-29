@@ -13,6 +13,7 @@ from prettytable import PrettyTable
 
 from project.DataIO.SaveToFile import write_new_exhib_to_txt
 from project.config import error_message_for_commands
+from project_lab_10.DataIO.SafeToXML import createXML_category, createXML_exhibitions
 
 
 def create_table(to_show='all'):
@@ -80,18 +81,7 @@ while True:
         create_testing_data()
 
     if command == 2:
-
         delete_all()
-
-        # while 1:
-        #     agreement = input('Are you sure? (yes / no): ')
-        #     if agreement == 'yes':
-        #         delete_all()
-        #         break
-        #     elif agreement == 'no':
-        #         break
-        #     else:
-        #         print('Unknown decision')
 
     if command == 3:
         os.system('CLS||clear')
@@ -100,6 +90,23 @@ while True:
 
         list_commands(commands_files)
         s_command = enter_number('Enter_command', var=len(commands_main), err=error_message_for_commands)
+
+        if s_command == 0:
+            continue
+
+        if s_command == 1:
+            create_testing_data()
+
+        if s_command == 2:
+            create_testing_data()
+
+        if s_command == 3:
+            create_testing_data()
+
+        if s_command == 4:
+            createXML_category("categories_data.xml")
+            createXML_exhibitions("exhibitions_data.xml")
+
 
     if command == 4:
         os.system('CLS||clear')
