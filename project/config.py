@@ -20,7 +20,7 @@ def get_path_from_xml_config():
     return path
 
 
-path_to_test_data = os.path.join(os.getcwd(), get_path_from_xml_config(), 'test_data.txt')
+path_to_test_data = os.path.join(os.getcwd(), 'project', get_path_from_xml_config(), 'test_data.txt')
 # print(path_to_test_data)
 
 # class Config:
