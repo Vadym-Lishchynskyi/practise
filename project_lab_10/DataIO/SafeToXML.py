@@ -2,7 +2,9 @@ import os
 import platform
 import xml.etree.ElementTree as xml
 
-from project.DataIO.ListExhibitions import all_categories, all_exhibitions
+from project.DataIO.ListExhibitions import all_categories, all_exhibitions, new_category, new_exhibition
+from project.Instances.Exhibition_category_inst import Category
+from project.Instances.Exhibition_inst import Exhibition
 
 
 def createXML_category(filename):
@@ -55,6 +57,33 @@ def createXML_exhibitions(filename):
     tree = xml.ElementTree(a_exhibitions)
     with open(filename, "wb") as fh:
         tree.write(fh)
+
+
+
+def get_from_xml(filename1, filename2):
+    tree = xml.parse(filename1)
+    a_categories = tree.getroot()
+
+    for cat in a_categories:
+        name = cat[0].text
+        decsription = cat[1].text
+
+        new_cat = Category(name, decsription)
+        new_category(new_cat)
+
+
+    tree = xml.parse(filename2)
+    a_exhibitions = tree.getroot()
+
+    for ex in a_exhibitions:
+        name = ex[0].text
+        category = ex[1].text
+        start_date = ex[2].text
+        decsription = ex[3].text
+
+        new_ex = Exhibition(name, decsription, all_categories[int(category)], start_date)
+        new_exhibition(new_ex)
+
 
 
 

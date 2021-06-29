@@ -13,7 +13,7 @@ from prettytable import PrettyTable
 
 from project.DataIO.SaveToFile import write_new_exhib_to_txt
 from project.config import error_message_for_commands
-from project_lab_10.DataIO.SafeToXML import createXML_category, createXML_exhibitions
+from project_lab_10.DataIO.SafeToXML import createXML_category, createXML_exhibitions, get_from_xml
 
 
 def create_table(to_show='all'):
@@ -98,7 +98,7 @@ while True:
             create_testing_data()
 
         if s_command == 2:
-            create_testing_data()
+            get_from_xml("categories_data.xml", "exhibitions_data.xml")
 
         if s_command == 3:
             create_testing_data()
